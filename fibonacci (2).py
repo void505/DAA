@@ -1,31 +1,35 @@
-def fibonacci_iterative(n:int):
-    if n == 1:
-        return 0
-    elif n == 2:
-        return 1
-    else:
-        dp = [0] * n
-        dp[0] = 0
-        dp[1] = 1
-        for i in range(2,n):
-            dp[i] = dp[i-1] + dp[i-2]
-        return dp[n-1]
+# Recursive Fibonacci with Step Count
+
+step_count = 0
 
 def fibonacci_recursive(n):
-    cache = {
-        1:0,
-        2:1
-    }
-    return helper(n,cache)
+    global step_count
+    step_count += 1
+    if n <= 1:
+        return n
+    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
 
-def helper(n:int,cache):
-    if n in cache:
-        return cache[n]
-    else:
-        return helper(n-1,cache) + helper(n-2,cache)
+# Input from the user
+n = int(input("Enter the value of n: "))
+result = fibonacci_recursive(n)
 
+print(f"Fibonacci({n}) = {result}")
+print(f"Step Count: {step_count}")
 
-n = int(input("Enter value of n(nth Fibonacci number): "))
-print(f"Fibonacci Number(Iterative): {fibonacci_iterative(n)}")
-print(f"Fibonacci Number(Recursive): {fibonacci_recursive(n)}")
+# Iterative Fibonacci with Step Count
+
+def fibonacci_iterative(n):
+    step_count = 0  # Initialize step count
+    a, b = 0, 1
+    for i in range(n):
+        step_count += 1  # Counting each loop iteration
+        a, b = b, a + b  # Updating values of a and b
+    return a, step_count
+
+# Input from the user
+n = int(input("Enter the value of n: "))
+result, step_count = fibonacci_iterative(n)
+
+print(f"Fibonacci({n}) = {result}")
+print(f"Step Count (Iterative): {step_count}")
 
